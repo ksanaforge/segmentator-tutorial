@@ -2,15 +2,19 @@
 <meta charset="utf8"></meta>
 <script src="dictionary.js"></script>
 <script src="segmentator.js"></script>
+<style> 
+body {background: silver;}
+#input{background:white;font-size:220%;}
+#output {font-size:200%}
+</style>
 <body>
-<textarea id="input" rows=10 cols=50 onInput="onChange()">
-中國是發展中國家</textarea>
+<textarea id="input" rows=5 cols=50 onInput="onChange()">
+發展中國家</textarea><!--中國是發展中國家//-->
 <div id="output"></div>
 </body>
 <script>
 const onChange=function(){
-	console.log("change")
-	output.innerHTML=segmentText(input.value).join("|");
+	output.innerHTML=segmentText(input.value).join("｜");
 }
 onChange();
 </script>

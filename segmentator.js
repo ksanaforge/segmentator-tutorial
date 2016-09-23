@@ -1,6 +1,7 @@
 /* modified from   https://github.com/hermanschaaf/jieba-js */
 var trie = {}, termfreq = {},min_freq = 0 ;//freq 是小於1對數，一定是負值
-var buildDictTrie = function () {
+
+const buildDictTrie = function () {
     var i, ci, totalfreq = 0 /*總頻次*/;
     for (i = 0; i < Dict.length; i++) {
         const term = Dict[i][0],  freq = Dict[i][1];
@@ -16,6 +17,7 @@ var buildDictTrie = function () {
     }
     return totalfreq;
 }
+
 const initialize=function(){ //建立詞庫樹 及詞頻，並轉成對數，後面可用加法代替乘法
     const totalfreq= buildDictTrie();
     for (k in termfreq) {
@@ -25,7 +27,9 @@ const initialize=function(){ //建立詞庫樹 及詞頻，並轉成對數，後
             min_freq = termfreq[k];
         }
     }
-}; initialize(); //定義後直接執行
+}; 
+initialize(); //定義後直接執行
+
 var sentanceDAG = function(sentence) { // 產生句子的 DAG 
     var N = sentence.length, DAG = {},
         i = 0, j = 0, p = trie;
@@ -54,13 +58,15 @@ var sentanceDAG = function(sentence) { // 產生句子的 DAG
     }
     return DAG;
 }
-var bestRoute = function( sentence, DAG ) { //找尋DAG最短路徑
+
+const bestRoute = function( sentence, DAG ) { //找尋DAG最短路徑
     var N = sentence.length; //句子長度
     var route=[],//每一個節點的最佳路徑
         idx=0, //目前的出發節點
         bestProb,//從idx出發的最佳概率
         bestEnd; //最大機率到達的終點
     route[N] = [0.0,N]; //終止元素，否則 route[sentence.length] 會出錯
+
     for (idx = N - 1; idx > -1; idx--) { //從後面開始算起，因為中文句子一般權重往後的較大
         bestProb=-Infinity;   //重設為最小值(保證第一次bestProb一定會被設置)
         for (xi in DAG[idx]) { //對所有從idx出發的可能路徑
@@ -77,11 +83,12 @@ var bestRoute = function( sentence, DAG ) { //找尋DAG最短路徑
     }
     return route;
 }
-var segSentence = function (sentence) {
+
+const segmentText = function(sentence) {
     var out = [] ,i=0;
     const DAG = sentanceDAG(sentence);
     const route = bestRoute(sentence, DAG);
-    console.log(route)
+
     while ( i<route.length){
         var s=sentence.substring(i,route[i][1]+1);
         if (s) out.push(s);
@@ -89,17 +96,5 @@ var segSentence = function (sentence) {
     }
     return out;
 }
-var segmentText = function(text){
-    var segment_all = false, yieldValues = [];
-    var res=[],i;
-    //加括號表示要保留splitter
-    const sents=text.split(/([。，！？；：「」]+)/); //句子
-    for (i=0;i<sents.length;i++) {
-        r=segSentence(sents[i]);
-        console.log(r)
-        res=res.concat(r);
-    }
-    
-    return res;
-}
-if (typeof module!=="undefined") module.exports=segmentText;else window.segmentText=segmentText;
+if (typeof module!=="undefined") module.exports=segmentText;
+else window.segmentText=segmentText;
