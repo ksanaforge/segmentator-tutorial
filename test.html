@@ -1,0 +1,18 @@
+<html>
+<meta charset="utf8"></meta>
+<script src="dictionary.js"></script>
+<script src="segmentator.js"></script>
+<body>
+<textarea id="input" rows=10 cols=50 onInput="onChange()">
+中國是發展中國家</textarea>
+<div id="output"></div>
+</body>
+<script>
+const onChange=function(){
+	console.log("change")
+	output.innerHTML=segmentText(input.value).join("|");
+}
+onChange();
+</script>
+
+</html>

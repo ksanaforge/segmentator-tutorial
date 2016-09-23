@@ -1,0 +1,25 @@
+tutorial
+http://blog.csdn.net/puqutogether/article/details/41518335
+
+http://blog.csdn.net/huyoo/article/details/50018607
+
+DAG and Path
+http://www.csie.ntnu.edu.tw/~u91029/Path.html
+
+http://www.csie.ntnu.edu.tw/~u91029/Path.html
+
+
+https://ruby-china.org/topics/28000
+
+markov http://pansci.asia/archives/43298
+
+shortest path in directed acyclic graph
+http://www.geeksforgeeks.org/shortest-path-for-directed-acyclic-graphs/
+
+DP路徑 動畫
+
+http://cpmarkchang.logdown.com/posts/192522-natural-language-processing-viterbi-algorithm
+
+text rank
+http://www.hankcs.com/nlp/textrank-algorithm-to-extract-the-keywords-java-implementation.html
+http://www.hankcs.com/nlp/textrank-algorithm-java-implementation-of-automatic-abstract.html
