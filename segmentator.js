@@ -58,8 +58,8 @@ var sentanceDAG = function(sentence) { // 產生句子的 DAG
     }
     return DAG;
 }
-
-const bestRoute = function( sentence, DAG ) { //找尋DAG最短路徑
+//最佳路徑的一部份也必然是該兩點間的最佳路徑
+const bestRoute = function( DAG , sentence) { //找尋DAG最短路徑
     var N = sentence.length; //句子長度
     var route=[],//每一個節點的最佳路徑
         idx=0, //目前的出發節點
@@ -87,12 +87,12 @@ const bestRoute = function( sentence, DAG ) { //找尋DAG最短路徑
 const segmentText = function(sentence) {
     var out = [] ,i=0;
     const DAG = sentanceDAG(sentence);
-    const route = bestRoute(sentence, DAG);
-
+    const route = bestRoute(DAG, sentence);
     while ( i<route.length){
-        var s=sentence.substring(i,route[i][1]+1);
+        var end=route[i][1]+1;
+        var s=sentence.substring(i,end);
         if (s) out.push(s);
-        i=route[i][1]+1;
+        i=end;
     }
     return out;
 }
