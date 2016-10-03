@@ -54,7 +54,7 @@ var sentanceDAG = function(sentence) { // 產生句子的 DAG
         }
     }    
     for (i = 0; i < sentence.length; i++) { //對於不存在於字典的每個字視為單字詞
-        if (!DAG[i]) DAG[i] = [i]; //連回自己
+        if (DAG[i].indexOf(i)==-1) DAG[i].push(i); //連回自己
     }
     return DAG;
 }
