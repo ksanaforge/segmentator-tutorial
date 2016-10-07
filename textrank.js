@@ -12,8 +12,7 @@ const createTermNeighbor=function(text){
 			if (i!=j) out[w][termlist[j]]=true;
 		}
 	}
-	for (w in out) {
-		//轉為陣列
+	for (w in out) {//轉為陣列
 		out[w]=Object.keys(out[w]);
 	}
 	return out;

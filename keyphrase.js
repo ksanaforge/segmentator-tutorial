@@ -16,10 +16,6 @@ const keyPhrase=function(input){
 		const scores=bm25.simAll(input[i]);
 		weight[i]=scores;
 		weight_sum[i]=scores.reduce((p,s)=>p+s,0) - scores[i]; //減去自己的分
-		if (weight_sum[i]<0) { //防暴衝
-			weight_sum[i]=0;
-			weight[i]=scores.map(()=>0);
-		}
 		vertex[i]=1.0 ;
 	}
 

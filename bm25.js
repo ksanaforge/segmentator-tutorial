@@ -3,7 +3,8 @@ const BM25=function(docs){
 	var df={}; //每個詞語出現在幾個句子 document frequency
 	//https://zh.wikipedia.org/wiki/TF-IDF
 	var idf={}; //每個詞的逆向文件頻率 inverse document frequency
-	const k1=1.5, b= 0.75; //調節因子
+	const k1=1.5; //term frequency saturation , 1.2~2.0 , lower value faster saturation
+	const b= 0.75; //Field-length normalization, 1 max, 0 no normalization
 	const avgdl=docs.reduce((p,s)=>p+s.length,0)/docs.length ;//句子平均有幾個詞？
 
 	const init=function(){
@@ -22,8 +23,8 @@ const BM25=function(docs){
 			f[i]=tf;
 		}
 		for (w in df){  //計算每個詞的 idf
-			const freq=df[w]; //+0.5 以避免  log(0)
-			idf[w]= Math.log(docs.length - freq + 0.5) - Math.log(freq+0.5);
+			const freq=df[w]; //加1 以避免log(0)
+			idf[w]= Math.log( (docs.length+1) /(freq+1));
 		}
 	}
 	init();
