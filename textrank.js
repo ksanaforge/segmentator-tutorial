@@ -2,7 +2,8 @@
 TextRank Paper http://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf*/
 const createTermNeighbor=function(text){
 	const WINSIZE=4;
-	const termlist=text.split(/ +/);
+	var termlist=text.split(/ +/);
+	termlist=termlist.filter(function(w){return w.trim()});//remove empty
 	var i,j,w,out={};
 	for (var i=0;i<termlist.length;i++) {
 		w=termlist[i];
@@ -25,7 +26,7 @@ const textRank=function(text) {
 
 	var score={}; //上一次迭代每個詞的分數
 	var iter=0;//迭代次數
-	const termNeighbor=createTermNeighbor(text)
+	const termNeighbor=createTermNeighbor(text);
 	while (iter<MAXITER){
 		max_diff=0; //此次迭代最大的差異
 	  var now={}; //此次迭代每個詞的分數
@@ -62,7 +63,7 @@ const textRank=function(text) {
 		out.push([key,now[key]]);
 	}
 	out.sort((a,b)=>b[1]-a[1]); //分數由大排到小
-	return out;
+	return {output:out, neighbor:termNeighbor};
 }
 if (typeof module!=="undefined") module.exports=textRank;
 else window.textRank=textRank;

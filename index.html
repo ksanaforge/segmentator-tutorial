@@ -8,16 +8,20 @@
 <style> 
 body {background: silver;}
 #input{background:white;font-size:150%;}
-#docs{background:white;font-size:100%;}
+#docs,#doc{background:white;font-size:100%;}
 #output {font-size:200%}
-#keyphrase_output , #textrank_output {white-space: pre}
+#termneighbor_output, #keyphrase_output , #textrank_output {white-space: pre}
 </style>
 <body>
 <textarea id="input" rows=2 cols=80 onInput="onChange()">
 太平凡</textarea><!--中國是發展中國家//-->
 <div id="output"></div>
-<br/><textarea id="doc" rows=1 cols=80>程序員 英文 程序 開發 維護 專業 人員 程序員 分為 程序 設計 人員 程序 編碼 人員 界限 特別 中國 軟件 人員 分為 程序員 高級 程序員 系統 分析員 項目 經理</textarea>
-<br/><div id="textrank_output" rows=10 cols=80></div>
+<br/><textarea id="doc" rows=1 cols=140 onInput="onSentenceChange()">程序員 英文 程序 開發 維護 專業 人員 程序員 分為 程序 設計 人員 程序 編碼 人員 界限 特別 中國 軟件 人員 分為 程序員 高級 程序員 系統 分析員 項目 經理</textarea>
+<br/>
+<div style="display:flex">
+<div style="flex:2" id="textrank_output"></div>
+<div style="flex:3" id="termneighbor_output"></div>
+</div>
 
 <br/><textarea id="docs" rows=10 cols=160 onInput="onDocChange()">
 算法 大致 分 基本 算法 数据 结构 算法 数论 算法 计算 几何 算法 图 算法 动态 规划 数值 分析 加密 算法 排序 算法 检索 算法 随机 化 算法 并行 算法 厄 米 变形 模型 随机 森林 算法
@@ -46,14 +50,23 @@ body {background: silver;}
 const onChange=function(){
 	output.innerHTML=segmentText(input.value).join("｜");
 }
+const onSentenceChange=function(){
+	const r=textRank(doc.value);
+	var neighbor=[];
+	for (var i in r.neighbor) {
+		neighbor.push(i+"="+r.neighbor[i].join(","));
+	}
+	termneighbor_output.innerHTML=neighbor.join("\n");
+	textrank_output.innerHTML=r.output.join("\n");
+}
 const onDocChange=function(){
 	var sentences=docs.value.trim().split(/\r?\n/);
 	sentences=sentences.map((s)=>s.split(/ +/)).filter((s)=>s.join(""));
 	//empty line will be trimmed
-	textrank_output.innerHTML=textRank(doc.value).join("\n");	
 	keyphrase_output.innerHTML=keyPhrase(sentences).join("\n");
 }
 onChange();
+onSentenceChange();
 onDocChange();
 </script>
 
