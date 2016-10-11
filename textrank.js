@@ -50,8 +50,8 @@ const textRank=function(text) {
 			//與上次迭代的差異
 			const score_diff=Math.abs(now[term] - score[term]);
 	 		max_diff = Math.max(max_diff, score_diff);
-	 		iter++;
 	  }
+	 	iter++;
 	  score=now; //保存此次成果
 	  if (max_diff <= MINDIFF) { //沒有比 MINDIFF 更大的差異，無須再迭代
 	   	console.log('迭代次數',iter);
